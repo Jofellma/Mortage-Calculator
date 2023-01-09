@@ -16,7 +16,7 @@ public class MortagePlanCalc {
             BufferedReader br = new BufferedReader(fr);
 
             String row;
-
+            //each row that is read is added to an arraylist
             while ((row = br.readLine()) != null) {
                 rows.add(row);
             }
@@ -29,15 +29,17 @@ public class MortagePlanCalc {
     public ArrayList<Mortage> createMortageObjects(ArrayList<String> file){
 
         ArrayList<Mortage> mortages = new ArrayList<Mortage>();
-
+        //remove the first index of the arraylist, aka the header
         String[] headers = file.remove(0).split(",");
 
         for(String row : file){
+            //split the arraylist at commas, except when inside ""
             String[] entity = row.split("(?!\".*)(,)(?!.*\")");
 
             if (entity.length < 4){
                 continue;
             }
+            //each entity represents information about the customer
             String customer = fixCustomerName(entity[0]);
             float totLoan = Float.parseFloat(entity[1]);
             float interest = Float.parseFloat(entity[2]);
@@ -52,7 +54,6 @@ public class MortagePlanCalc {
     public String fixCustomerName(String name) {
         name = name.replace(",", " ");
         name = name.replaceAll("\"","");
-        //name = name.replaceAll("[^a-öA-Ö\\s]", "");
         return name;
     }
 
@@ -69,7 +70,7 @@ public class MortagePlanCalc {
         ArrayList<Mortage> mortages = createMortageObjects(file);
         int i = 1;
         Currency currency = Currency.getInstance("EUR");
-        //System.out.println("****************************************************************************************************");
+
         for(Mortage mortage : mortages) {
             mortage.calcMonthlyPay();
             System.out.println("****************************************************************************************************");
@@ -80,6 +81,6 @@ public class MortagePlanCalc {
             i += 1;
             System.out.println("****************************************************************************************************");
         }
-        //System.out.println("****************************************************************************************************");
+
     }
 }

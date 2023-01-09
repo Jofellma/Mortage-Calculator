@@ -17,6 +17,7 @@ public class Mortage {
         this.years = years;
 
     }
+    //power function
     public double toPower(double base, int power){
 
         double number = 1;
